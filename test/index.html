@@ -1,9 +1,47 @@
 <!doctype html>
-<html>
+<html lang="ja">
   <head>
-    <title>Test</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>p == 2 Detection</title>
   </head>
   <body>
-    <p>Test</p>
+    <script>
+      let p = 0; // 初期値を設定
+
+      // detected関数の定義
+      function detected() {
+        console.log("p == 2 が3秒間続きました!");
+      }
+
+      let checkInterval = null;
+      let pCheckStartTime = null;
+
+      function startCheckingP() {
+        checkInterval = setInterval(() => {
+          if (p === 2) {
+            if (pCheckStartTime === null) {
+              pCheckStartTime = Date.now();
+            } else if (Date.now() - pCheckStartTime >= 3000) {
+              detected();
+              clearInterval(checkInterval);
+            }
+          } else {
+            pCheckStartTime = null;
+          }
+        }, 100); // 100msごとに状態を確認
+      }
+
+      // 状態監視を開始
+      startCheckingP();
+
+      // デモのため、数秒後にpを変更する
+      setTimeout(() => {
+        p = 2;
+      }, 2000); // 2秒後にpを2に変更
+      setTimeout(() => {
+        p = 3;
+      }, 7000); // 7秒後にpを3に変更
+    </script>
   </body>
 </html>

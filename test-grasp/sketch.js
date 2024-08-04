@@ -3,36 +3,29 @@
 let canvas;
 
 let sketch = function (p) {
-  let image = [];
-  let pointer = [];
-  let testImage = [];
   let finPosX = [];
   let finPosY = [];
   let thumbRootX = [];
   let thumbRootY = [];
-  let flag = 1;
-  let imageNum = 0;
-  let handImage = [];
-  let pickImage = [];
 
+  let flag = 1;
+  let handImage = [];
+
+  let tobiraImage = [];
   let pickLevel;
+  let waitMilSec = 800;
 
   let fingerDist;
-  let glispLevel;
+  let graspLevel;
   let handImgWid = 440;
   let handImgHei = 420;
   let pickImgWid = 440;
-  let pickImgHei = 420;
+  let pickImgHei = 320;
+
+  let timeoutId;
 
   p.setup = function () {
     // cannot use p.preload so load here using callback...
-    p.loadImage("mousePointer/mouse_cursor_048.png", function (loadedImage) {
-      testImage[0] = loadedImage;
-    });
-    p.loadImage("mousePointer/mouse_cursor_150.png", function (loadedImage) {
-      testImage[1] = loadedImage;
-    });
-
     // load hand images
     {
       p.loadImage("hands/1.jpg", function (loadedImage) {
@@ -88,38 +81,111 @@ let sketch = function (p) {
       });
       p.loadImage("hands/18.jpg", function (loadedImage) {
         handImage[17] = loadedImage;
+        handImage[18] = loadedImage;
       });
     }
     {
-      p.loadImage("picking/01.jpg", function (loadedImage) {
-        pickImage[0] = loadedImage;
+      p.loadImage("tobira/tobira_001.jpg", function (loadedImage) {
+        tobiraImage[0] = loadedImage;
       });
-      p.loadImage("picking/02.jpg", function (loadedImage) {
-        pickImage[1] = loadedImage;
+      p.loadImage("tobira/tobira_002.jpg", function (loadedImage) {
+        tobiraImage[1] = loadedImage;
       });
-      p.loadImage("picking/03.jpg", function (loadedImage) {
-        pickImage[2] = loadedImage;
+      p.loadImage("tobira/tobira_003.jpg", function (loadedImage) {
+        tobiraImage[2] = loadedImage;
       });
-      p.loadImage("picking/04.jpg", function (loadedImage) {
-        pickImage[3] = loadedImage;
+      p.loadImage("tobira/tobira_004.jpg", function (loadedImage) {
+        tobiraImage[3] = loadedImage;
       });
-      p.loadImage("picking/05.jpg", function (loadedImage) {
-        pickImage[4] = loadedImage;
+      p.loadImage("tobira/tobira_005.jpg", function (loadedImage) {
+        tobiraImage[4] = loadedImage;
       });
-      p.loadImage("picking/06.jpg", function (loadedImage) {
-        pickImage[5] = loadedImage;
+      p.loadImage("tobira/tobira_006.jpg", function (loadedImage) {
+        tobiraImage[5] = loadedImage;
       });
-      p.loadImage("picking/07.jpg", function (loadedImage) {
-        pickImage[6] = loadedImage;
+      p.loadImage("tobira/tobira_007.jpg", function (loadedImage) {
+        tobiraImage[6] = loadedImage;
       });
-      p.loadImage("picking/08.jpg", function (loadedImage) {
-        pickImage[7] = loadedImage;
+      p.loadImage("tobira/tobira_008.jpg", function (loadedImage) {
+        tobiraImage[7] = loadedImage;
       });
-      p.loadImage("picking/09.jpg", function (loadedImage) {
-        pickImage[8] = loadedImage;
+      p.loadImage("tobira/tobira_009.jpg", function (loadedImage) {
+        tobiraImage[8] = loadedImage;
       });
-      p.loadImage("picking/10.jpg", function (loadedImage) {
-        pickImage[9] = loadedImage;
+      p.loadImage("tobira/tobira_010.jpg", function (loadedImage) {
+        tobiraImage[9] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_011.jpg", function (loadedImage) {
+        tobiraImage[10] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_012.jpg", function (loadedImage) {
+        tobiraImage[11] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_013.jpg", function (loadedImage) {
+        tobiraImage[12] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_014.jpg", function (loadedImage) {
+        tobiraImage[13] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_015.jpg", function (loadedImage) {
+        tobiraImage[14] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_016.jpg", function (loadedImage) {
+        tobiraImage[15] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_017.jpg", function (loadedImage) {
+        tobiraImage[16] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_018.jpg", function (loadedImage) {
+        tobiraImage[17] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_019.jpg", function (loadedImage) {
+        tobiraImage[18] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_020.jpg", function (loadedImage) {
+        tobiraImage[19] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_021.jpg", function (loadedImage) {
+        tobiraImage[20] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_022.jpg", function (loadedImage) {
+        tobiraImage[21] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_023.jpg", function (loadedImage) {
+        tobiraImage[22] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_024.jpg", function (loadedImage) {
+        tobiraImage[23] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_025.jpg", function (loadedImage) {
+        tobiraImage[24] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_026.jpg", function (loadedImage) {
+        tobiraImage[25] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_034.jpg", function (loadedImage) {
+        tobiraImage[26] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_035.jpg", function (loadedImage) {
+        tobiraImage[27] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_038.jpg", function (loadedImage) {
+        tobiraImage[28] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_041.jpg", function (loadedImage) {
+        tobiraImage[29] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_042.jpg", function (loadedImage) {
+        tobiraImage[30] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_045.jpg", function (loadedImage) {
+        tobiraImage[31] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_048.jpg", function (loadedImage) {
+        tobiraImage[32] = loadedImage;
+      });
+      p.loadImage("tobira/tobira_049.jpg", function (loadedImage) {
+        tobiraImage[33] = loadedImage;
       });
     }
 
@@ -165,20 +231,21 @@ let sketch = function (p) {
     }
   };
 
-  p.drawFingerCircle = function (i, fingerNum) {
-    p.ellipse(
-      (finPosX[i][0] + finPosX[i][fingerNum]) / 2,
-      (finPosY[i][0] + finPosY[i][fingerNum]) / 2,
-      p.dist(
-        finPosX[i][0],
-        finPosY[i][0],
-        finPosX[i][fingerNum],
-        finPosY[i][fingerNum],
-      ),
-    );
-  };
   // flag 1
   {
+    p.drawFingerCircle = function (i, fingerNum) {
+      p.ellipse(
+        (finPosX[i][0] + finPosX[i][fingerNum]) / 2,
+        (finPosY[i][0] + finPosY[i][fingerNum]) / 2,
+        p.dist(
+          finPosX[i][0],
+          finPosY[i][0],
+          finPosX[i][fingerNum],
+          finPosY[i][fingerNum],
+        ),
+      );
+    };
+
     p.drawFingersCircles = function () {
       for (let i = 0; i < detections.multiHandLandmarks.length; i++) {
         // index finger
@@ -206,22 +273,43 @@ let sketch = function (p) {
   }
 
   // flag 2
-  p.movePicking = function () {
-    if (finPosX[0][1]) {
-      pickLevel = p.int(p.map(finPosX[0][1], 0, p.width, 0, 9));
-    }
-    if (pickImage[pickLevel]) {
-      p.image(pickImage[pickLevel], pickImgWid, pickImgHei, 800, 600);
-    } else {
-      console.log("not found", pickLevel);
-    }
-  };
+  {
+    p.movePicking = function () {
+      if (finPosX[0][1]) {
+        pickLevel = p.int(p.map(finPosX[0][1], 0, p.width, 0, 32));
+      } else {
+        pickLevel = 33;
+      }
+      if (tobiraImage[pickLevel]) {
+        p.image(
+          tobiraImage[pickLevel],
+          pickImgWid,
+          pickImgHei,
+          p.width,
+          p.height,
+        );
+      } else {
+        console.log("not found f2's", pickLevel);
+      }
+    };
 
-  p.detectPickEnd = function () {
-    if (pickLevel == 9) {
-      flag = 3;
-    }
-  };
+    p.checkKeepingOpened = function () {
+      if (pickLevel >= 30) {
+        if (timeoutId === null) {
+          timeoutId = setTimeout(() => {
+            flag = 3;
+            timeoutId = null; // reset timer
+          }, waitMilSec);
+        }
+      } else {
+        if (timeoutId !== null) {
+          // if not 2, reset timer
+          clearTimeout(timeoutId);
+          timeoutId = null;
+        }
+      }
+    };
+  }
 
   // flag 3
   {
@@ -232,45 +320,44 @@ let sketch = function (p) {
         finPosX[0][1],
         finPosY[0][1],
       );
-      glispLevel = p.int(p.map(fingerDist, 50, 280, 16, 2));
-      // console.log(`glispLevel=${glispLevel}`);
-      // console.log(`fingerDist=${fingerDist}`);
-      if (handImage[glispLevel]) {
-        p.image(handImage[glispLevel], handImgWid, handImgHei);
+      graspLevel = p.int(p.map(fingerDist, 50, 280, 16, 2));
+      if (fingerDist > 300) {
+        graspLevel = 0;
+      }
+      if (handImage[graspLevel]) {
+        p.image(handImage[graspLevel], handImgWid, handImgHei);
       }
     };
 
-    p.detectGlisped = function () {
-      if (glispLevel == 16) {
-        flag = 1;
+    p.checkKeepingGrasped = function () {
+      if (graspLevel >= 16) {
+        if (timeoutId === null) {
+          timeoutID = setTimeout(() => {
+            flag = 1;
+            timeoutId = null;
+          }, waitMilSec);
+        } else {
+          if (timeoutId !== null) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+          }
+        }
+      }
+    };
+
+    p.interaction = function (flag, imageNum) {
+      if (flag == 1) {
+        p.drawFingersCircles();
+        p.detectFingerTouched();
+      } else if (flag == 2) {
+        p.movePicking();
+        p.checkKeepingOpened();
+      } else if (flag == 3) {
+        p.interactWithImageHand();
+        p.checkKeepingGrasped();
       }
     };
   }
-
-  p.interaction = function (flag, imageNum) {
-    if (flag == 1) {
-      p.drawFingersCircles();
-      p.detectFingerTouched();
-    } else if (flag == 2) {
-      p.movePicking();
-      p.detectPickEnd();
-    } else if (flag == 3) {
-      p.interactWithImageHand();
-      p.detectGlisped();
-    }
-  };
-
-  //==
-  // MediaPipe Hands の結果を受け取るコールバック
-  hands.onResults(onResults);
-
-  p.onResults = function (results) {
-    // clear();
-    // p.image(video, 0, 0, p.width, p.height);
-    // 手のランドマークを描画（オプション）
-    drawLandmarks(results);
-  };
-  //==
 };
 
 let myp5 = new p5(sketch);
