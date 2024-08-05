@@ -9,18 +9,28 @@ let sketch = function (p) {
   let thumbRootY = [];
 
   let flag = 1;
+  let imageNum = 0;
   let handImage = [];
 
   let tobiraImage = [];
   let pickLevel;
+  let checkIntervalf2 = null;
+  let checkStartTimef2 = null;
   let waitMilSec = 800;
 
-  let fingerDist;
-  let graspLevel;
-  let handImgWid = 440;
-  let handImgHei = 420;
+  let fingerDist = [];
+  let graspLevel = [];
+  let checkIntervalf3 = null;
+  let checkStartTimef3 = null;
+  let handImgRWid = 220;
+  let handImgRHei = 320;
+  let handImgLWid = 660;
+  let handImgLHei = 320;
   let pickImgWid = 440;
   let pickImgHei = 320;
+
+  let graspMin = 50;
+  let graspMax = 280;
 
   let timeoutId;
 
@@ -189,7 +199,8 @@ let sketch = function (p) {
       });
     }
 
-    canvas = p.createCanvas(880, 640);
+    canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+    console.log(p.windowWidth, p.windowHeight);
     canvas.id("canvas");
 
     // mode settings
@@ -211,7 +222,7 @@ let sketch = function (p) {
         p.strokeWeight(3);
 
         p.calcFingerPos();
-        p.interaction(flag);
+        p.interaction();
       }
     }
   };
@@ -276,7 +287,24 @@ let sketch = function (p) {
   {
     p.movePicking = function () {
       if (finPosX[0][1]) {
-        pickLevel = p.int(p.map(finPosX[0][1], 0, p.width, 0, 32));
+        if (finPosX[1][1]) {
+          pickLevel = p.int(
+            p.map(
+              p.dist(
+                finPosX[0][1],
+                finPosY[0][1],
+                finPosX[1][1],
+                finPosY[1][1],
+              ),
+              60,
+              p.width,
+              0,
+              32,
+            ),
+          );
+        } else {
+          pickLevel = p.int(p.map(finPosX[0][1], 0, p.width, 0, 32));
+        }
       } else {
         pickLevel = 33;
       }
@@ -289,6 +317,7 @@ let sketch = function (p) {
           p.height,
         );
       } else {
+        p.image(tobiraImage[33], pickImgWid, pickImgHei, p.width, p.height);
         console.log("not found f2's", pickLevel);
       }
     };
@@ -314,23 +343,48 @@ let sketch = function (p) {
   // flag 3
   {
     p.interactWithImageHand = function () {
-      fingerDist = p.dist(
+      fingerDist[0] = p.dist(
         thumbRootX[0],
         thumbRootY[0],
         finPosX[0][1],
         finPosY[0][1],
       );
-      graspLevel = p.int(p.map(fingerDist, 50, 280, 16, 2));
-      if (fingerDist > 300) {
-        graspLevel = 0;
+      graspLevel[0] = p.int(p.map(fingerDist[0], graspMin, graspMax, 16, 2));
+      if (fingerDist[0] > 300) {
+        graspLevel[0] = 0;
       }
-      if (handImage[graspLevel]) {
-        p.image(handImage[graspLevel], handImgWid, handImgHei);
+
+      fingerDist[1] = p.dist(
+        thumbRootX[1],
+        thumbRootY[1],
+        finPosX[1][1],
+        finPosY[1][1],
+      );
+      graspLevel[1] = p.int(p.map(fingerDist[1], graspMin, graspMax, 16, 2));
+      if (fingerDist[1] > 300) {
+        graspLevel[1] = 0;
+      }
+
+      if (handImage[graspLevel[0]]) {
+        p.image(
+          handImage[graspLevel[0]],
+          handImgLWid,
+          handImgLHei,
+          p.width / 2,
+          p.height,
+        );
+      }
+      if (handImage[graspLevel[1]]) {
+        p.push();
+        p.scale(-1, 1);
+        p.translate(-handImgRWid, handImgRHei);
+        p.image(handImage[graspLevel[1]], 0, 0, p.width / 2, p.height);
+        p.pop();
       }
     };
 
     p.checkKeepingGrasped = function () {
-      if (graspLevel >= 16) {
+      if (graspLevel[0] >= 16 && graspLevel[1] >= 16) {
         if (timeoutId === null) {
           timeoutID = setTimeout(() => {
             flag = 1;
@@ -345,7 +399,7 @@ let sketch = function (p) {
       }
     };
 
-    p.interaction = function (flag, imageNum) {
+    p.interaction = function () {
       if (flag == 1) {
         p.drawFingersCircles();
         p.detectFingerTouched();
