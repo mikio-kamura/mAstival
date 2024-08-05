@@ -22,16 +22,15 @@ let sketch = function (p) {
   let graspLevel = [];
   let checkIntervalf3 = null;
   let checkStartTimef3 = null;
-  let handImgRWid = 220;
-  let handImgRHei = 320;
-  let handImgLWid = 660;
-  let handImgLHei = 320;
-  let pickImgWid = 440;
-  let pickImgHei = 320;
+  let handImgRWid = 475;
+  let handImgRHei = 500;
+  let handImgLWid = 1425;
+  let handImgLHei = 500;
+  let pickImgWid = 950;
+  let pickImgHei = 500;
 
-  let graspMin = 50;
-  let graspMax = 280;
-
+  let graspMin = 60; //50
+  let graspMax = 400; //280
   let timeoutId;
 
   p.setup = function () {
