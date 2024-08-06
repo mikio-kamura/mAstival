@@ -378,7 +378,7 @@ let sketch = function (p) {
     };
 
     p.checkKeepingGrasped = function () {
-      if (graspLevel[0] >= 16 && graspLevel[1] >= 16) {
+      if (graspLevel[0] <= 2 && graspLevel[1] <= 2) {
         if (timeoutId === null) {
           timeoutID = setTimeout(() => {
             flag = 1;
