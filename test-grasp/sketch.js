@@ -362,16 +362,19 @@ let sketch = function (p) {
       }
 
       if (handImage[graspLevel[0]]) {
+        p.push();
+        p.scale(-1, 1);
+        p.translate(-handImgLwid, 0);
         p.image(
           handImage[graspLevel[0]],
-          handImgLWid,
+          0,
           handImgLHei,
           p.width / 2,
           p.height,
         );
+        p.pop();
       }
       if (handImage[graspLevel[1]]) {
-        p.push();
         p.image(
           handImage[graspLevel[1]],
           handImgRWid,
@@ -379,8 +382,6 @@ let sketch = function (p) {
           p.width / 2,
           p.height,
         );
-        p.scale(-1, 1);
-        p.pop();
       }
     };
 
