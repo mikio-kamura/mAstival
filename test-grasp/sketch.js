@@ -9,7 +9,6 @@ let sketch = function (p) {
   let thumbRootY = [];
 
   let flag = 1;
-  let imageNum = 0;
   let handImage = [];
 
   let tobiraImage = [];
@@ -318,7 +317,7 @@ let sketch = function (p) {
     };
 
     p.checkKeepingOpened = function () {
-      if (pickLevel >= 28) {
+      if (pickLevel >= 25) {
         if (timeoutId === null) {
           timeoutId = setTimeout(() => {
             flag = 3;
