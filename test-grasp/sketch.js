@@ -297,15 +297,15 @@ let sketch = function (p) {
               ),
               60,
               p.width,
-              0,
+              10,
               32,
             ),
           );
         } else {
-          pickLevel = p.int(p.map(finPosX[0][1], 0, p.width, 0, 32));
+          pickLevel = p.int(p.map(finPosX[0][1], 0, p.width, 10, 32));
         }
       } else {
-        pickLevel = 33;
+        pickLevel = 20;
       }
       if (tobiraImage[pickLevel]) {
         p.image(
