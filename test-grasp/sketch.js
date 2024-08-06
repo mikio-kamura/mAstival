@@ -10,6 +10,7 @@ let sketch = function (p) {
 
   let flag = 1;
   let handImage = [];
+  let circleMin = 10;
 
   let tobiraImage = [];
   let pickLevel;
@@ -270,7 +271,8 @@ let sketch = function (p) {
 
     p.detectFingerTouched = function () {
       if (
-        p.dist(finPosX[0][0], finPosY[0][0], finPosX[0][1], finPosY[0][1]) < 8
+        p.dist(finPosX[0][0], finPosY[0][0], finPosX[0][1], finPosY[0][1]) <
+        circleMin
       ) {
         flag = 2;
       }
