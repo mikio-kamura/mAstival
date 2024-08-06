@@ -270,7 +270,7 @@ let sketch = function (p) {
 
     p.detectFingerTouched = function () {
       if (
-        p.dist(finPosX[0][0], finPosY[0][0], finPosX[0][1], finPosY[0][1]) < 13
+        p.dist(finPosX[0][0], finPosY[0][0], finPosX[0][1], finPosY[0][1]) < 8
       ) {
         flag = 2;
       }
@@ -343,7 +343,7 @@ let sketch = function (p) {
         finPosX[0][1],
         finPosY[0][1],
       );
-      graspLevel[0] = p.int(p.map(fingerDist[0], graspMin, graspMax, 16, 2));
+      graspLevel[0] = p.int(p.map(fingerDist[0], graspMin, graspMax, 17, 2));
       if (fingerDist[0] > 300) {
         graspLevel[0] = 0;
       }
