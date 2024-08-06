@@ -364,7 +364,7 @@ let sketch = function (p) {
       if (handImage[graspLevel[0]]) {
         p.push();
         p.scale(-1, 1);
-        p.translate(-handImgLwid, 0);
+        p.translate(-handImgLWid, 0);
         p.image(
           handImage[graspLevel[0]],
           0,
