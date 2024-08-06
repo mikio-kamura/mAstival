@@ -14,14 +14,10 @@ let sketch = function (p) {
 
   let tobiraImage = [];
   let pickLevel;
-  let checkIntervalf2 = null;
-  let checkStartTimef2 = null;
   let waitMilSec = 800;
 
   let fingerDist = [];
   let graspLevel = [];
-  let checkIntervalf3 = null;
-  let checkStartTimef3 = null;
   let handImgRWid = 475;
   let handImgRHei = 500;
   let handImgLWid = 1425;
@@ -29,8 +25,8 @@ let sketch = function (p) {
   let pickImgWid = 950;
   let pickImgHei = 500;
 
-  let graspMin = 60; //50
-  let graspMax = 400; //280
+  let graspMin = 50; //50
+  let graspMax = 280; //280
   let timeoutId;
 
   p.setup = function () {
@@ -322,7 +318,7 @@ let sketch = function (p) {
     };
 
     p.checkKeepingOpened = function () {
-      if (pickLevel >= 30) {
+      if (pickLevel >= 28) {
         if (timeoutId === null) {
           timeoutId = setTimeout(() => {
             flag = 3;
