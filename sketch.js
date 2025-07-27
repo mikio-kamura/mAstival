@@ -22,8 +22,6 @@ let sketch = function (p) {
   let handImgRHei = 500;
   let handImgLWid = 1425;
   let handImgLHei = 500;
-  let pickImgWid = 950;
-  let pickImgHei = 500;
 
   let graspMin = 50; //50
   let graspMax = 280; //280
@@ -307,13 +305,13 @@ let sketch = function (p) {
       if (tobiraImage[pickLevel]) {
         p.image(
           tobiraImage[pickLevel],
-          pickImgWid,
-          pickImgHei,
+          p.width / 2,
+          p.height / 2,
           p.width,
           p.height,
         );
       } else {
-        p.image(tobiraImage[33], pickImgWid, pickImgHei, p.width, p.height);
+        p.image(tobiraImage[33], p.width / 2, p.height / 2, p.width, p.height);
         console.log("not found f2's", pickLevel);
       }
     };
@@ -363,12 +361,12 @@ let sketch = function (p) {
 
       if (handImage[graspLevel[0]]) {
         p.push();
+        // p.translate(-p.width / 2, 0);
         p.scale(-1, 1);
-        p.translate(-handImgLWid, 0);
         p.image(
           handImage[graspLevel[0]],
-          0,
-          handImgLHei,
+          - p.width / 4 * 3,
+          p.height / 2,
           p.width / 2,
           p.height,
         );
@@ -377,8 +375,8 @@ let sketch = function (p) {
       if (handImage[graspLevel[1]]) {
         p.image(
           handImage[graspLevel[1]],
-          handImgRWid,
-          handImgRHei,
+          p.width / 4,
+          p.height / 2,
           p.width / 2,
           p.height,
         );
