@@ -18,13 +18,9 @@ let sketch = function (p) {
 
   let fingerDist = [];
   let graspLevel = [];
-  let handImgRWid = 475;
-  let handImgRHei = 500;
-  let handImgLWid = 1425;
-  let handImgLHei = 500;
 
-  let graspMin = 50; //50
-  let graspMax = 280; //280
+  let graspMin = 50;
+  let graspMax = 280;
   let timeoutId;
 
   p.setup = function () {
